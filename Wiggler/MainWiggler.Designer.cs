@@ -40,6 +40,7 @@
             MaximizeBox = false;
             Name = "MainWiggler";
             ResumeLayout(false);
+            Size = new System.Drawing.Size(350, 400);
         }
 
         #endregion
