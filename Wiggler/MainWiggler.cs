@@ -1,7 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-using System.Timers;
-
-namespace Wiggler
+﻿namespace Wiggler
 {
     public partial class MainWiggler : Form
     {
@@ -25,7 +22,7 @@ namespace Wiggler
             {   
                 PlaceholderText = CommonStrings.Interval,
                 Location = new Point(50, 10),
-                Size = new Size(100, 30),
+                Size = new Size(100, 50),
             };
 
             this.Controls.Add(_intervalInput);
@@ -35,7 +32,7 @@ namespace Wiggler
             _startButton = new Button
             {
                 Text = CommonStrings.Start,
-                Location = new Point(50, 30),
+                Location = new Point(50, 150),
                 Size = new Size(100, 30)
             };
 
@@ -47,7 +44,7 @@ namespace Wiggler
             _stopButton = new Button
             {
                 Text = CommonStrings.Stop,
-                Location = new Point(50, 90),
+                Location = new Point(50, 200),
                 Size = new Size(100, 30)
             };
 
