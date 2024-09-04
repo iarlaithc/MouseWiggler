@@ -61,6 +61,24 @@ namespace Wiggler {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Interval.
+        /// </summary>
+        internal static string Interval {
+            get {
+                return ResourceManager.GetString("Interval", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid Interval Value.
+        /// </summary>
+        internal static string InvalidIntervalValue {
+            get {
+                return ResourceManager.GetString("InvalidIntervalValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to MouseWiggler.
         /// </summary>
         internal static string MouseWiggler {
