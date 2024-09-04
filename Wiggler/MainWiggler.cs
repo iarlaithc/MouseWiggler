@@ -24,9 +24,25 @@
             this.Controls.Add(startButton);
         }
 
-        private void Start_Click(object sender, EventArgs e)
+        private async void Start_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(CommonStrings.MouseWiggler);
+            Int32 i = 0;
+            while (i < 10)
+            {
+                await MoveCursor();
+                i++;
+
+                //this freezes the wiggler app window while running
+            }
+        }
+
+        private async Task MoveCursor()
+        {
+            this.Cursor = new Cursor(Cursor.Current.Handle);
+            Cursor.Position = new Point(Cursor.Position.X - 1, Cursor.Position.Y - 1);
+            Task.Delay(200).Wait();
+            Cursor.Position = new Point(Cursor.Position.X + 1, Cursor.Position.Y + 1);
+            Task.Delay(200).Wait();
         }
     }
 }
