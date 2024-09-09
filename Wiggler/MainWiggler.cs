@@ -5,6 +5,7 @@
         private TextBox _intervalInput;
         private Button _startButton;
         private Button _stopButton;
+        private Label _enabledLabel;
         private System.Windows.Forms.Timer _sysTimer;
 
         public MainWiggler()
@@ -21,39 +22,42 @@
             _intervalInput = new TextBox
             {   
                 PlaceholderText = CommonStrings.Interval,
-                Location = new Point(50, 10),
+                Location = new Point(10, 30),
                 Size = new Size(100, 50),
             };
-
-            this.Controls.Add(_intervalInput);
-
 
             // Start
             _startButton = new Button
             {
                 Text = CommonStrings.Start,
-                Location = new Point(50, 150),
-                Size = new Size(100, 30)
+                Location = new Point(120, 30),
+                Size = new Size(70, 30)
             };
-
             _startButton.Click += Start_Click;
-
-            this.Controls.Add(_startButton);
 
             // Stop
             _stopButton = new Button
             {
                 Text = CommonStrings.Stop,
-                Location = new Point(50, 200),
-                Size = new Size(100, 30)
+                Location = new Point(120, 70),
+                Size = new Size(70, 30)
             };
-
             _stopButton.Click += Stop_Click;
 
-            this.Controls.Add(_stopButton);
+            // Green / Red
+            _enabledLabel = new Label
+            {
+                Text = CommonStrings.Stopped,
+                ForeColor = Color.Red,
+                Location = new Point(10, 70),
+                Size = new Size(70, 50),
+            };
+
+            Control[] controls = new Control[] { _enabledLabel, _intervalInput, _startButton, _stopButton };
+            this.Controls.AddRange(controls);
         }
 
-        private async void Start_Click(object sender, EventArgs e)
+        private void Start_Click(object sender, EventArgs e)
         {
 
             if (int.TryParse(_intervalInput.Text, out Int32 intervalInMilliseconds))
@@ -64,17 +68,28 @@
                 _sysTimer.Interval = intervalInMilliseconds;
                 _sysTimer.Tick += MoveCursor;
                 _sysTimer.Start();
+
+                // add message
+                _enabledLabel.Text = CommonStrings.Running;
+                _enabledLabel.ForeColor = Color.Green;
             }
             else
             {
                 MessageBox.Show(CommonStrings.InvalidIntervalValue);
+                // add message
+                _enabledLabel.Text = CommonStrings.Stopped;
+                _enabledLabel.ForeColor = Color.Red;
             }
         }
 
-        private async void Stop_Click(object sender, EventArgs e)
+        private void Stop_Click(object sender, EventArgs e)
         {
             // end timer 
             _sysTimer.Stop();
+
+            // Message
+            _enabledLabel.Text = CommonStrings.Stopped;
+            _enabledLabel.ForeColor = Color.Red;
         }
 
         private async void MoveCursor(object sender, EventArgs e)
