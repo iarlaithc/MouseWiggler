@@ -38,14 +38,10 @@ namespace Wiggler
         private void InitializeComponent()
         {
             SuspendLayout();
-
-            // MainWiggler
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.ControlDark;
             FormBorderStyle = FormBorderStyle.None;
-            MaximizeBox = false;
             Size = new Size(300, 200);
-
             ResumeLayout(false);
         }
 
