@@ -117,8 +117,14 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="IcsMouseWiggler" xml:space="preserve">
+    <value>IC's Mouse Wiggler</value>
+  </data>
   <data name="Interval" xml:space="preserve">
     <value>Interval</value>
+  </data>
+  <data name="INT_1000" xml:space="preserve">
+    <value>1000</value>
   </data>
   <data name="InvalidIntervalValue" xml:space="preserve">
     <value>Invalid Interval Value</value>
@@ -137,5 +143,11 @@
   </data>
   <data name="Stopped" xml:space="preserve">
     <value>Stopped</value>
+  </data>
+  <data name="Symbol_Dash" xml:space="preserve">
+    <value>-</value>
+  </data>
+  <data name="Symbol_X" xml:space="preserve">
+    <value>X</value>
   </data>
 </root>

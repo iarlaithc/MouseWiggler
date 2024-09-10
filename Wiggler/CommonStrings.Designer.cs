@@ -61,6 +61,24 @@ namespace Wiggler {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to IC&apos;s Mouse Wiggler.
+        /// </summary>
+        internal static string IcsMouseWiggler {
+            get {
+                return ResourceManager.GetString("IcsMouseWiggler", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 1000.
+        /// </summary>
+        internal static string INT_1000 {
+            get {
+                return ResourceManager.GetString("INT_1000", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Interval.
         /// </summary>
         internal static string Interval {
@@ -120,6 +138,24 @@ namespace Wiggler {
         internal static string Stopped {
             get {
                 return ResourceManager.GetString("Stopped", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to -.
+        /// </summary>
+        internal static string Symbol_Dash {
+            get {
+                return ResourceManager.GetString("Symbol_Dash", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to X.
+        /// </summary>
+        internal static string Symbol_X {
+            get {
+                return ResourceManager.GetString("Symbol_X", resourceCulture);
             }
         }
     }
