@@ -38,6 +38,7 @@ namespace Wiggler
         private void InitializeComponent()
         {
             SuspendLayout();
+            StartPosition = FormStartPosition.CenterScreen;
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.ControlDark;
             FormBorderStyle = FormBorderStyle.None;
