@@ -9,7 +9,17 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Update="CommonStrings.Designer.cs">
+    <None Remove="Resources\W95FA.otf" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\W95FA.otf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Resources\CommonStrings.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>CommonStrings.resx</DependentUpon>
@@ -17,7 +27,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="CommonStrings.resx">
+    <EmbeddedResource Update="Resources\CommonStrings.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>CommonStrings.Designer.cs</LastGenOutput>
     </EmbeddedResource>

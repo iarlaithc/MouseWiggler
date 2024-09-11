@@ -1,5 +1,8 @@
 ﻿using System.Runtime.InteropServices;
 using Timer = System.Windows.Forms.Timer;
+using CommonStrings = Wiggler.Resources.CommonStrings;
+using System.Drawing.Text;
+using System.Windows.Forms;
 
 namespace Wiggler
 {
@@ -38,12 +41,17 @@ namespace Wiggler
         private void InitializeComponent()
         {
             SuspendLayout();
+
             StartPosition = FormStartPosition.CenterScreen;
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.ControlDark;
             FormBorderStyle = FormBorderStyle.None;
             Size = new Size(300, 200);
-            ResumeLayout(false);
+
+            // Custom Font
+            PrivateFontCollection fontCollection = new PrivateFontCollection();
+            fontCollection.AddFontFile("Resources/W95FA.otf");
+            Font = new Font(fontCollection.Families[0], 10); 
         }
 
         private void AddMainControls()
@@ -83,6 +91,7 @@ namespace Wiggler
                 Text = CommonStrings.IcsMouseWiggler,
                 Location = new Point(0, 0),
                 BackColor = Color.Transparent,
+                Size = new Size(150, 20),
             };
             _windowTitleLabel.MouseDown += _headerPanel_Draggable;
 
@@ -122,7 +131,7 @@ namespace Wiggler
                 Location = new Point(10, 70),
                 Size = new Size(70, 50),
             };
-                       
+
             this.Controls.AddRange(new Control[]
             {
                 _headerPanel,
