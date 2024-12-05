@@ -63,7 +63,7 @@ namespace Wiggler
         private void AddMainControls()
         {
             _controlGroup.Text = CommonStrings.Interval;
-            _controlGroup.Location = new Point(5, 25);
+            _controlGroup.Location = new Point(5, 27);
             _controlGroup.Size = new Size(252, 144);
             _controlGroup.BackColor = Win95Background;
             _controlGroup.FlatStyle = FlatStyle.System;
@@ -120,8 +120,8 @@ namespace Wiggler
         {
             _windowExitButton = new Button
             {
-                Size = new Size(24, 24),
-                Location = new Point(Width - 29, 0),
+                Size = new Size(22, 22),
+                Location = new Point(Width - 29, 1),
                 Text = CommonStrings.Symbol_X,
                 ForeColor = Color.White,
                 Anchor = AnchorStyles.Top | AnchorStyles.Right
@@ -131,8 +131,8 @@ namespace Wiggler
 
             _windowMinimizeButton = new Button
             {
-                Size = new Size(24, 24),
-                Location = new Point(Width - 53, 0),
+                Size = new Size(22, 22),
+                Location = new Point(Width - 53, 1),
                 Text = CommonStrings.Symbol_Dash,
                 ForeColor = Color.White,
                 Anchor = AnchorStyles.Top | AnchorStyles.Right
@@ -144,7 +144,7 @@ namespace Wiggler
             {
                 Text = CommonStrings.IcsMouseWiggler,
                 Location = new Point(22, 3),
-                Size = new Size(130, 20),
+                Size = new Size(160, 20),
                 TextAlign = ContentAlignment.MiddleLeft,
                 ForeColor = Color.White,
                 Font = new Font(Font.FontFamily, 10f, FontStyle.Bold)
@@ -299,6 +299,17 @@ namespace Wiggler
         {
             base.OnPaint(e);
             ControlPaint.DrawBorder3D(e.Graphics, ClientRectangle, Border3DStyle.Raised);
+        }
+
+        private void StyleButton(Button button)
+        {
+            button.FlatStyle = FlatStyle.System;
+            button.BackColor = Win95Background;
+            button.UseVisualStyleBackColor = false;
+            button.Font = Font;
+            button.EnabledChanged += (s, e) => {
+                button.ForeColor = button.Enabled ? Color.Black : Win95Shadow;
+            };
         }
     }
 }
