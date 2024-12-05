@@ -63,7 +63,7 @@ namespace Wiggler
         private void AddMainControls()
         {
             _controlGroup.Text = CommonStrings.Interval;
-            _controlGroup.Location = new Point(5, 27);
+            _controlGroup.Location = new Point(5, 30);
             _controlGroup.Size = new Size(252, 144);
             _controlGroup.BackColor = Win95Background;
             _controlGroup.FlatStyle = FlatStyle.System;
@@ -96,7 +96,7 @@ namespace Wiggler
             _headerPanel = new Panel
             {
                 Dock = DockStyle.Top,
-                Height = 24,
+                Height = 26,
                 BackColor = Win95TitleBar
             };
             _headerPanel.MouseDown += (s, e) => {
@@ -133,7 +133,7 @@ namespace Wiggler
             _windowExitButton = new Button
             {
                 Size = new Size(22, 22),
-                Location = new Point(Width - 29, 1),
+                Location = new Point(Width - 29, 2),
                 Text = CommonStrings.Symbol_X,
                 ForeColor = Color.White,
                 Anchor = AnchorStyles.Top | AnchorStyles.Right
@@ -144,7 +144,7 @@ namespace Wiggler
             _windowMinimizeButton = new Button
             {
                 Size = new Size(22, 22),
-                Location = new Point(Width - 53, 1),
+                Location = new Point(Width - 53, 2),
                 Text = CommonStrings.Symbol_Dash,
                 ForeColor = Color.White,
                 Anchor = AnchorStyles.Top | AnchorStyles.Right
@@ -168,15 +168,6 @@ namespace Wiggler
                     SendMessage(Handle, WM_NCLBUTTONDOWN, HTCAPTION, 0);
                 }
             };
-
-            var icon = new PictureBox
-            {
-                Image = SystemIcons.Application.ToBitmap(),
-                SizeMode = PictureBoxSizeMode.CenterImage,
-                Size = new Size(19, 19),
-                Location = new Point(2, 2)
-            };
-            _headerPanel.Controls.Add(icon);
         }
 
         private void InitializeMainControls()
