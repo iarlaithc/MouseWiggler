@@ -1,14 +1,24 @@
-﻿using System.Runtime.InteropServices;
-using Timer = System.Windows.Forms.Timer;
+﻿using System.Drawing.Text;
+using System.Runtime.InteropServices;
 using CommonStrings = Wiggler.Resources.CommonStrings;
-using System.Drawing.Text;
-using System.Windows.Forms;
+using Timer = System.Windows.Forms.Timer;
 
 namespace Wiggler
 {
     public class MainWiggler : Form
     {
-        #region Private Variables
+        private const int WM_NCLBUTTONDOWN = 0xA1;
+        private const int HTCAPTION = 0x2;
+        private static readonly Color Win95Background = ColorTranslator.FromHtml("#C0C0C0");
+        private static readonly Color Win95DarkShadow = ColorTranslator.FromHtml("#404040");
+        private static readonly Color Win95Shadow = ColorTranslator.FromHtml("#808080");
+        private static readonly Color Win95TitleBar = ColorTranslator.FromHtml("#000080");
+
+        [DllImport("User32.dll")]
+        public static extern bool ReleaseCapture();
+
+        [DllImport("User32.dll")]
+        public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
 
         private TextBox _intervalInput;
         private Button _startButton;
@@ -18,139 +28,214 @@ namespace Wiggler
         private Button _windowExitButton;
         private Button _windowMinimizeButton;
         private Label _windowTitleLabel;
-        private Timer _sysTimer;
-
-        #endregion
-
-        #region Draggable Custom Window Variables
-        public const int WM_NCLBUTTONDOWN = 0xA1;
-        public const int HTCAPTION = 0x2;
-        [DllImport("User32.dll")]
-        public static extern bool ReleaseCapture();
-        [DllImport("User32.dll")]
-        public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
-        #endregion
+        private readonly Timer _sysTimer;
+        private readonly GroupBox _controlGroup;
 
         public MainWiggler()
         {
+            _controlGroup = new GroupBox();
+            _sysTimer = new Timer();
             InitializeComponent();
             AddMainControls();
-            _sysTimer = new Timer();
         }
 
         private void InitializeComponent()
         {
             SuspendLayout();
 
+            Icon = SystemIcons.Application;
+            MinimizeBox = false;
+            MaximizeBox = false;
             StartPosition = FormStartPosition.CenterScreen;
             AutoScaleMode = AutoScaleMode.Font;
-            BackColor = SystemColors.ControlDark;
+            BackColor = Win95Background;
             FormBorderStyle = FormBorderStyle.None;
-            Size = new Size(300, 200);
+            Size = new Size(264, 180);
+            Padding = new Padding(3);
+            ShowIcon = true;
 
-            // Custom Font
-            PrivateFontCollection fontCollection = new PrivateFontCollection();
+            var fontCollection = new PrivateFontCollection();
             fontCollection.AddFontFile("Resources/W95FA.otf");
-            Font = new Font(fontCollection.Families[0], 10); 
+            Font = new Font(fontCollection.Families[0], 10f);
+            ResumeLayout();
         }
 
         private void AddMainControls()
         {
-            // Toolbar Panel
-            _headerPanel = new Panel
-            {
-                Location = new Point(0, 0),
-                Size = new Size(300, 20),
-                BackColor = Color.White,
-            };
-            _headerPanel.MouseDown += _headerPanel_Draggable;
+            _controlGroup.Text = CommonStrings.Interval;
+            _controlGroup.Location = new Point(5, 25);
+            _controlGroup.Size = new Size(252, 144);
+            _controlGroup.BackColor = Win95Background;
+            _controlGroup.FlatStyle = FlatStyle.System;
 
-            // Exit Button
-            _windowExitButton = new Button
-            {
-                Location = new Point(280, 0),
-                Size = new Size(20, 20),
-                BackColor = Color.Beige,
-                Text = CommonStrings.Symbol_X,
-            };
-            _windowExitButton.Click += _windowExitButton_Click;
+            InitializeHeaderPanel();
+            InitializeWindowControls();
+            InitializeMainControls();
 
-            // Minimize Button
-            _windowMinimizeButton = new Button
-            {
-                Location = new Point(260, 0),
-                Size = new Size(20, 20),
-                BackColor = Color.Beige,
-                Text = CommonStrings.Symbol_Dash,
-            };
-            _windowMinimizeButton.Click += _windowMinimizeButton_Click;
-
-            // Title Label
-            _windowTitleLabel = new Label
-            {
-                Text = CommonStrings.IcsMouseWiggler,
-                Location = new Point(0, 0),
-                BackColor = Color.Transparent,
-                Size = new Size(150, 20),
-            };
-            _windowTitleLabel.MouseDown += _headerPanel_Draggable;
-
-            // Interval Input
-            _intervalInput = new TextBox
-            {
-                PlaceholderText = CommonStrings.Interval,
-                Location = new Point(10, 30),
-                Size = new Size(100, 50),
-                Text = CommonStrings.INT_1000,
-                TabStop = false,
-            };
-
-            // Start
-            _startButton = new Button
-            {
-                Text = CommonStrings.Start,
-                Location = new Point(120, 30),
-                Size = new Size(70, 30)
-            };
-            _startButton.Click += _startButton_Click;
-
-            // Stop
-            _stopButton = new Button
-            {
-                Text = CommonStrings.Stop,
-                Location = new Point(120, 70),
-                Size = new Size(70, 30)
-            };
-            _stopButton.Click += _stopButton_Click;
-
-            // Green / Red
-            _enabledLabel = new Label
-            {
-                Text = CommonStrings.Stopped,
-                ForeColor = Color.Red,
-                Location = new Point(10, 70),
-                Size = new Size(70, 50),
-            };
-
-            this.Controls.AddRange(new Control[]
-            {
-                _headerPanel,
-                _enabledLabel,
-                _intervalInput,
-                _startButton,
-                _stopButton,
-            });
+            Controls.Add(_controlGroup);
+            Controls.Add(_headerPanel);
 
             _headerPanel.Controls.AddRange(new Control[]
             {
                 _windowExitButton,
                 _windowMinimizeButton,
-                _windowTitleLabel,
+                _windowTitleLabel
+            });
+
+            _controlGroup.Controls.AddRange(new Control[]
+            {
+                _intervalInput,
+                _startButton,
+                _stopButton,
+                _enabledLabel
             });
         }
 
-        #region Control Events
-        private void _headerPanel_Draggable(object? sender, MouseEventArgs e)
+        private void InitializeHeaderPanel()
+        {
+            _headerPanel = new Panel
+            {
+                Dock = DockStyle.Top,
+                Height = 24,
+                BackColor = Win95TitleBar
+            };
+            _headerPanel.MouseDown += (s, e) => {
+                if (e.Button == MouseButtons.Left)
+                {
+                    ReleaseCapture();
+                    SendMessage(Handle, WM_NCLBUTTONDOWN, HTCAPTION, 0);
+                }
+            };
+        }
+
+        private void StyleButton(Button button)
+        {
+            button.FlatStyle = FlatStyle.System;
+            button.BackColor = Win95Background;
+            button.UseVisualStyleBackColor = false;
+            button.Font = Font;
+        }
+
+        private void InitializeWindowControls()
+        {
+            _windowExitButton = new Button
+            {
+                Size = new Size(24, 24),
+                Location = new Point(Width - 29, 0),
+                Text = CommonStrings.Symbol_X,
+                ForeColor = Color.White,
+                Anchor = AnchorStyles.Top | AnchorStyles.Right
+            };
+            StyleButton(_windowExitButton);
+            _windowExitButton.Click += WindowExitButton_Click;
+
+            _windowMinimizeButton = new Button
+            {
+                Size = new Size(24, 24),
+                Location = new Point(Width - 53, 0),
+                Text = CommonStrings.Symbol_Dash,
+                ForeColor = Color.White,
+                Anchor = AnchorStyles.Top | AnchorStyles.Right
+            };
+            StyleButton(_windowMinimizeButton);
+            _windowMinimizeButton.Click += WindowMinimizeButton_Click;
+
+            _windowTitleLabel = new Label
+            {
+                Text = CommonStrings.IcsMouseWiggler,
+                Location = new Point(22, 3),
+                Size = new Size(130, 20),
+                TextAlign = ContentAlignment.MiddleLeft,
+                ForeColor = Color.White,
+                Font = new Font(Font.FontFamily, 10f, FontStyle.Bold)
+            };
+            _windowTitleLabel.MouseDown += (s, e) => {
+                if (e.Button == MouseButtons.Left)
+                {
+                    ReleaseCapture();
+                    SendMessage(Handle, WM_NCLBUTTONDOWN, HTCAPTION, 0);
+                }
+            };
+
+            var icon = new PictureBox
+            {
+                Image = SystemIcons.Application.ToBitmap(),
+                SizeMode = PictureBoxSizeMode.CenterImage,
+                Size = new Size(19, 19),
+                Location = new Point(2, 2)
+            };
+            _headerPanel.Controls.Add(icon);
+        }
+
+        private void InitializeMainControls()
+        {
+            _intervalInput = new TextBox
+            {
+                Location = new Point(12, 24),
+                Size = new Size(84, 28),
+                Text = CommonStrings.INT_1000,
+                BorderStyle = BorderStyle.Fixed3D
+            };
+
+            _intervalInput.KeyPress += (s, e) => {
+                if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+                {
+                    e.Handled = true;
+                }
+            };
+
+            _intervalInput.TextChanged += (s, e) => {
+                _sysTimer.Stop();
+                _enabledLabel.Text = CommonStrings.Stopped;
+                _enabledLabel.ForeColor = Color.Red;
+                UpdateButtonStates(false);
+            };
+
+            _intervalInput.Leave += (s, e) => {
+                if (int.TryParse(_intervalInput.Text, out int value) && value < 1000)
+                {
+                    _intervalInput.Text = CommonStrings.INT_1000;
+                }
+            };
+
+            _startButton = new Button
+            {
+                Location = new Point(108, 24),
+                Size = new Size(72, 28),
+                Text = CommonStrings.Start
+            };
+            StyleButton(_startButton);
+            _startButton.Click += StartButton_Click;
+
+            _stopButton = new Button
+            {
+                Location = new Point(108, 60),
+                Size = new Size(72, 28),
+                Text = CommonStrings.Stop
+            };
+            StyleButton(_stopButton);
+            _stopButton.Click += StopButton_Click;
+
+            _enabledLabel = new Label
+            {
+                Location = new Point(12, 60),
+                Size = new Size(84, 28),
+                Text = CommonStrings.Stopped,
+                ForeColor = Color.Red,
+                TextAlign = ContentAlignment.MiddleLeft,
+                BorderStyle = BorderStyle.Fixed3D
+            };
+
+            UpdateButtonStates(false);
+        }
+
+        private void UpdateButtonStates(bool isRunning)
+        {
+            _startButton.Enabled = !isRunning;
+            _stopButton.Enabled = isRunning;
+        }
+
+        private void HeaderPanel_Draggable(object? sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
             {
@@ -159,55 +244,61 @@ namespace Wiggler
             }
         }
 
-        private void _windowMinimizeButton_Click(object? sender, EventArgs e)
+        private void WindowMinimizeButton_Click(object? sender, EventArgs e)
         {
             WindowState = FormWindowState.Minimized;
         }
 
-        private void _windowExitButton_Click(object? sender, EventArgs e)
+        private void WindowExitButton_Click(object? sender, EventArgs e)
         {
             Close();
         }
 
-        private void _startButton_Click(object? sender, EventArgs e)
+        private void StartButton_Click(object? sender, EventArgs e)
         {
-
-            if (int.TryParse(_intervalInput.Text, out Int32 intervalInMilliseconds))
+            if (int.TryParse(_intervalInput.Text, out int intervalInMilliseconds))
             {
                 intervalInMilliseconds = Math.Max(1000, intervalInMilliseconds);
 
-                // begin timer
                 _sysTimer.Interval = intervalInMilliseconds;
                 _sysTimer.Tick += WiggleCursor;
                 _sysTimer.Start();
+
                 _enabledLabel.Text = CommonStrings.Running;
                 _enabledLabel.ForeColor = Color.Green;
+                UpdateButtonStates(true);
             }
             else
             {
                 _enabledLabel.Text = CommonStrings.Stopped;
                 _enabledLabel.ForeColor = Color.Red;
+                UpdateButtonStates(false);
             }
         }
 
-        private void _stopButton_Click(object? sender, EventArgs e)
+        private void StopButton_Click(object? sender, EventArgs e)
         {
-            // end timer 
             _sysTimer.Stop();
-
-            // Message
             _enabledLabel.Text = CommonStrings.Stopped;
             _enabledLabel.ForeColor = Color.Red;
+            UpdateButtonStates(false);
         }
 
         private async void WiggleCursor(object? sender, EventArgs e)
         {
-            this.Cursor = new Cursor(Cursor.Current.Handle);
+            Cursor = new Cursor(Cursor.Current.Handle);
+
             Cursor.Position = new Point(Cursor.Position.X - 1, Cursor.Position.Y - 1);
             await Task.Delay(100);
+
             Cursor.Position = new Point(Cursor.Position.X + 1, Cursor.Position.Y + 1);
             await Task.Delay(100);
         }
-        #endregion
+
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            base.OnPaint(e);
+            ControlPaint.DrawBorder3D(e.Graphics, ClientRectangle, Border3DStyle.Raised);
+        }
     }
 }

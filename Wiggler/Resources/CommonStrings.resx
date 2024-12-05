@@ -126,6 +126,9 @@
   <data name="INT_1000" xml:space="preserve">
     <value>1000</value>
   </data>
+  <data name="INT_999999" xml:space="preserve">
+    <value>999999</value>
+  </data>
   <data name="InvalidIntervalValue" xml:space="preserve">
     <value>Invalid Interval Value</value>
   </data>

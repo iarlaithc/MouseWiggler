@@ -79,6 +79,15 @@ namespace Wiggler.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 999999.
+        /// </summary>
+        internal static string INT_999999 {
+            get {
+                return ResourceManager.GetString("INT_999999", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Interval.
         /// </summary>
         internal static string Interval {
