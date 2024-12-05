@@ -17,7 +17,7 @@ A simple but effective mouse wiggler application that prevents your system from 
 
 ## Installation
 
-1. Download the installer from the [Releases](releases) section
+1. Download the installer from the [Releases](https://github.com/iarlaithc/MouseWiggler/releases/tag/release) section
 2. Run the installer
 3. If .NET 9 Runtime is not installed, you will be prompted to install it
 4. Follow the installation wizard
