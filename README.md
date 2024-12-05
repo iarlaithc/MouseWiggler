@@ -24,8 +24,8 @@ A simple but effective mouse wiggler application that prevents your system from 
 
 ## Usage
 
-![Application Main Window](https://github.com/iarlaithc/MouseWiggler/blob/master/Wiggler/Resources/Images/Examples/Wiggler.PNG
-)
+![Application Main Window](https://github.com/iarlaithc/MouseWiggler/blob/master/Wiggler/Resources/Images/Examples/Wiggler.PNG)
+
 
 1. Launch IC's Mouse Wiggler
 2. Enter your desired interval (in milliseconds)
@@ -40,8 +40,7 @@ The application moves your mouse cursor diagonally by 1 pixel at your specified 
 
 ## Screenshots
 
-![Running]([![wiggler2](https://github.com/user-attachments/assets/13ca9408-3fdd-4ea6-a230-0b1cc1f56c22](https://github.com/iarlaithc/MouseWiggler/blob/master/Wiggler/Resources/Images/Examples/wiggler2.PNG))
-)
+![Running](https://github.com/user-attachments/assets/13ca9408-3fdd-4ea6-a230-0b1cc1f56c22](https://github.com/iarlaithc/MouseWiggler/blob/master/Wiggler/Resources/Images/Examples/wiggler2.PNG)
 
 ## Contributing
 
