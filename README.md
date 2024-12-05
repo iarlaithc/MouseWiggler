@@ -24,7 +24,7 @@ A simple but effective mouse wiggler application that prevents your system from 
 
 ## Usage
 
-![Application Main Window](https://github.com/iarlaithc/MouseWiggler/blob/master/Wiggler/Resources/Images/Examples/Wiggler.PNG)
+![Application Main Window](https://github.com/iarlaithc/MouseWiggler/blob/master/Wiggler/Resources/Images/Examples/Wiggler.PNG
 )
 
 1. Launch IC's Mouse Wiggler
