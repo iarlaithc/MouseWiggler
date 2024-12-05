@@ -6,6 +6,8 @@
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <PackageIcon>icMW.png</PackageIcon>
   </PropertyGroup>
 	
   <ItemGroup>
@@ -34,8 +36,22 @@
   </ItemGroup>
 
 	<ItemGroup>
-		<None Remove="Resources\Images\icMW.ico" />
 		<EmbeddedResource Include="Resources\Images\icMW.ico" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Update="LICENSE">
+	    <Pack>True</Pack>
+	    <PackagePath>\</PackagePath>
+	  </None>
+	  <None Update="Resources\Images\icMW.ico">
+	    <Pack>True</Pack>
+	    <PackagePath>\</PackagePath>
+	  </None>
+	  <None Update="Resources\Images\icMW.png">
+	    <Pack>True</Pack>
+	    <PackagePath>\</PackagePath>
+	  </None>
 	</ItemGroup>
 
 </Project>
