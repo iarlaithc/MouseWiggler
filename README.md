@@ -37,8 +37,6 @@ A simple but effective mouse wiggler application that prevents your system from 
 
 The application moves your mouse cursor diagonally by 1 pixel at your specified interval. This minimal movement is enough to prevent your system from entering sleep mode or showing as idle, while being virtually unnoticeable during normal computer use.
 
-![Movement Pattern Demonstration](placeholder_movement_pattern.png)
-
 ## Screenshots
 
 ![Settings Interface](placeholder_settings.png)
