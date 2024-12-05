@@ -30,20 +30,20 @@ namespace Wiggler
         private Label _windowTitleLabel;
         private readonly Timer _sysTimer;
         private readonly GroupBox _controlGroup;
+        private PictureBox _titleIcon;
 
         public MainWiggler()
         {
             _controlGroup = new GroupBox();
             _sysTimer = new Timer();
+            Icon = new Icon(GetType().Assembly.GetManifestResourceStream("Wiggler.Resources.Images.icMW.ico"));
             InitializeComponent();
-            AddMainControls();
+            AddMainControls(); 
         }
 
         private void InitializeComponent()
         {
             SuspendLayout();
-
-            Icon = SystemIcons.Application;
             MinimizeBox = false;
             MaximizeBox = false;
             StartPosition = FormStartPosition.CenterScreen;
@@ -114,10 +114,22 @@ namespace Wiggler
             button.BackColor = Win95Background;
             button.UseVisualStyleBackColor = false;
             button.Font = Font;
+            button.EnabledChanged += (s, e) => {
+                button.ForeColor = button.Enabled ? Color.Black : Win95Shadow;
+            };
         }
 
         private void InitializeWindowControls()
         {
+            _titleIcon = new PictureBox
+            {
+                Image = Icon.ToBitmap(),
+                SizeMode = PictureBoxSizeMode.Zoom,
+                Size = new Size(19, 19),
+                Location = new Point(2, 2)
+            };
+            _headerPanel.Controls.Add(_titleIcon);
+
             _windowExitButton = new Button
             {
                 Size = new Size(22, 22),
@@ -299,17 +311,6 @@ namespace Wiggler
         {
             base.OnPaint(e);
             ControlPaint.DrawBorder3D(e.Graphics, ClientRectangle, Border3DStyle.Raised);
-        }
-
-        private void StyleButton(Button button)
-        {
-            button.FlatStyle = FlatStyle.System;
-            button.BackColor = Win95Background;
-            button.UseVisualStyleBackColor = false;
-            button.Font = Font;
-            button.EnabledChanged += (s, e) => {
-                button.ForeColor = button.Enabled ? Color.Black : Win95Shadow;
-            };
-        }
+        }        
     }
 }
