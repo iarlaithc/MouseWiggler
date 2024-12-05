@@ -40,8 +40,7 @@ The application moves your mouse cursor diagonally by 1 pixel at your specified 
 
 ## Screenshots
 
-![Running](https://github.com/user-attachments/assets/13ca9408-3fdd-4ea6-a230-0b1cc1f56c22](https://github.com/iarlaithc/MouseWiggler/blob/master/Wiggler/Resources/Images/Examples/wiggler2.PNG)
-
+![Running](https://github.com/iarlaithc/MouseWiggler/blob/master/Wiggler/Resources/Images/Examples/wiggler2.PNG)
 ## Contributing
 
 Feel free to submit issues and enhancement requests!
