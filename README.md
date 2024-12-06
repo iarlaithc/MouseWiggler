@@ -54,8 +54,5 @@ MIT
 If you encounter any problems or have suggestions, please [open an issue](issues) on GitHub.
 
 ## Upcoming Features
-
-- Support for other operating systems
-- Additional movement patterns
+- Signing / Certifying
 - Configuration saving
-- [Add any planned features here]
