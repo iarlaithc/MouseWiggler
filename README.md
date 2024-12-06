@@ -8,7 +8,6 @@ A simple but effective mouse wiggler application that prevents your system from 
 - Minimal diagonal mouse movement (1 pixel)
 - Simple start/stop functionality
 - Lightweight and easy to use
-- System tray integration
 
 ## Requirements
 
